@@ -193,15 +193,26 @@ All assumptions made where the assessment left decisions open (to be updated as 
 5. **Duplicate cart entries** — adding an existing product increments its quantity instead of creating a duplicate line (standard cart behaviour).
 6. **Stock** — placing an order decrements stock; quantity can never exceed available stock.
 7. **Rounding** — all currency values are rounded to 2 decimal places at the final step.
+8. **Free shipping** — applies when the post-discount amount is above ₹999.
 
 ---
+## 🖥️ Frontend Notes
 
+- Built with React (Vite). Logic is separated from UI:
+  - `src/billing.js` – pure billing and coupon engine (no React, easy to unit test)
+  - `src/data.js` – sample products (to be replaced by the `/api/products` call)
+  - `src/App.jsx` – product grid, cart, coupon box, billing summary, order confirmation
+- The bill is derived from cart + coupon on every render, so the summary always stays in sync.
+- Applied coupons are re-validated whenever the cart changes and removed with a message if no longer valid.
+- Order placement re-checks stock and the coupon before confirming.
+- Currently runs on local sample data. The backend should repeat the same validation.
+  
 ## 🗺️ Roadmap
 
 - [x] **Phase 0** — Repository, README, project skeleton
 - [ ] **Phase 1** — Backend: models, migrations/seed, REST API
 - [ ] **Phase 2** — Billing & coupon engine with unit tests
-- [ ] **Phase 3** — Frontend: product grid, cart, coupon section, billing summary, order confirmation
+- [x] **Phase 3** — Frontend: product grid, cart, coupon section, billing summary, order confirmation
 - [ ] **Phase 4** — Validation polish, error states, responsive UI pass
 - [ ] **Phase 5** — Final QA, README updates, submission
 
