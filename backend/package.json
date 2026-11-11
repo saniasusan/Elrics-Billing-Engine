@@ -1,14 +1,22 @@
 {
   "name": "elrics-billing-backend",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Elrics E-Commerce Billing & Coupon Engine - Express REST API and billing engine",
+  "version": "1.0.0",
+  "description": "Elrics E-Commerce Billing & Coupon Engine API",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "seed": "node src/seed/seed.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/seed.js",
     "test": "jest"
   },
-  "license": "UNLICENSED"
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.4"
+  }
 }
