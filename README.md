@@ -207,11 +207,32 @@ All assumptions made where the assessment left decisions open (to be updated as 
 - Order placement re-checks stock and the coupon before confirming.
 - Currently runs on local sample data. The backend should repeat the same validation.
   
+## 🔌 API Endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | /api/products | List products |
+| POST | /api/billing/preview | Calculate the bill for a cart and coupon |
+| POST | /api/billing/coupon | Validate a coupon |
+| POST | /api/orders | Place an order (re-validates stock and coupon) |
+| GET | /api/orders/:orderId | Fetch an order |
+
+Request body for billing and orders: `{ "items": [{ "productId": "...", "quantity": 2 }], "couponCode": "WELCOME10" }`
+
+**Setup:** in `backend/`, run `npm install`, copy `.env.example` to `.env`, run `npm run seed`, then `npm run dev`. Run tests with `npm test`.
+
+## 🧠 Backend Notes
+
+- `src/services/billing.js` is a pure billing and coupon engine (no database), covered by Jest tests.
+- The server looks up prices from the database and never trusts prices sent by the browser.
+- Orders re-validate the cart, stock and coupon, then decrement stock (with rollback if a line fails).
+- The cart is kept in the browser, so there is no `Cart` collection.
+  
 ## 🗺️ Roadmap
 
 - [x] **Phase 0** — Repository, README, project skeleton
-- [ ] **Phase 1** — Backend: models, migrations/seed, REST API
-- [ ] **Phase 2** — Billing & coupon engine with unit tests
+- [x] **Phase 1** — Backend: models, migrations/seed, REST API
+- [x] **Phase 2** — Billing & coupon engine with unit tests
 - [x] **Phase 3** — Frontend: product grid, cart, coupon section, billing summary, order confirmation
 - [ ] **Phase 4** — Validation polish, error states, responsive UI pass
 - [ ] **Phase 5** — Final QA, README updates, submission
